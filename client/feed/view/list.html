@@ -1,0 +1,88 @@
+<header>
+  <h1>봉주와 백경이의 담벼락 :-)</h1>
+</header>
+<div align="right">
+	<span ng-if="$ctrl.totalCount != 0" >글 수 : {{$ctrl.totalCount}} 개</span>
+	<a ng-click="$ctrl.addModal()" class="btn btn-primary" data-toggle="modal" href='#modal-id'>글쓰기</a>
+</div>
+<div class="content-wrapper">
+		<div id="list-view-announce" class="row">
+			<div class="text-center hidden-xs col-sm-1">No</div>
+			<div class="text-center col-xs-4 col-sm-3">Title</div>
+			<div class="text-center col-xs-5 col-sm-4">Content</div>
+			<div class="text-center hidden-xs col-sm-2">Date</div>
+			<div class="text-center col-xs-3 col-sm-2">Modify</div>
+		</div>
+		<div class="list-view row" ng-repeat="feed in $ctrl.feeds">
+			<div class="text-center hidden-xs col-sm-1">{{$index + 1}}</div>
+			<div class="text-center col-xs-4 col-sm-3">{{feed.title}}</div>
+			<div class="text-center col-xs-5 col-sm-4">{{feed.content}}</div>
+			<div class="text-center hidden-xs col-sm-2">{{feed.date | date:'yyyy-MM-dd'}}</div>
+			<div class="text-center col-xs-3 col-sm-2">
+				<a ng-click="$ctrl.modifyModal(feed)" class="btn btn-xs btn-primary">수정</a>
+				<a ng-click="$ctrl.delete(feed)" class="btn btn-xs btn-primary">삭제</a>
+			</div>
+		</div>
+		<div class="text-center col-xs-12" ng-if="$ctrl.totalCount == 0">
+			<strong>글좀써!!</strong>
+		</div>
+</div>
+<!-- <table class="table">
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Title</th>
+			<th>Content</th>
+			<th>Date</th>
+			<th>Modify</th>
+		</tr>
+	</thead>
+	<tbody ng-if="$ctrl.totalCount != 0" class="">
+		<tr ng-repeat="feed in $ctrl.feeds">
+			<td>{{$index + 1}}</td>
+			<td>{{feed.title}}</td>
+			<td>{{feed.content}}</td>
+			<td>{{feed.date | date:'yyyy-MM-dd'}}</td>
+			<td>
+				<a ng-click="$ctrl.modifyModal(feed)" class="btn btn-primary">수정</a>
+				<a ng-click="$ctrl.delete(feed)" class="btn btn-primary">삭제</a>
+			</td>
+		</tr>
+	</tbody>
+	<tbody ng-if="$ctrl.totalCount == 0">
+		<tr>
+			<td colspan="5" align="middle"><strong>글좀써!!</strong></td>
+		</tr>
+	</tbody>
+</table> -->
+
+<!-- 글 모달 창 -->
+<div class="modal fade" id="modal-id">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 ng-if="$ctrl.mode=='add'" class="modal-title">담벼락 글쓰기</h4>
+				<h4 ng-if="$ctrl.mode=='modify'" class="modal-title">담벼락 글수정</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+				  <div class="form-group">
+				    <label for="title">제목</label>
+				    <input ng-model="$ctrl.title" type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+				  </div>
+				  <div class="form-group">
+				    <label for="content">내용</label>
+				    <textarea ng-model="$ctrl.content" class="form-control" id="content" placeholder="내용을 입력하세요"></textarea>
+				    <!-- <input type="password" class="form-control" id="content" placeholder="Password"> -->
+				  </div>
+				  <div class="modal-footer">
+				  	<button ng-click="$ctrl.addFeed($ctrl.title, $ctrl.content)" ng-if="$ctrl.mode=='add'" class="btn btn-primary">글쓰기</button>
+				  	<button ng-click="$ctrl.modifyFeed($ctrl.title, $ctrl.content)" ng-if="$ctrl.mode=='modify'" class="btn btn-primary">글수정</button>
+						<button ng-click="$ctrl.reset()" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				  </div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
